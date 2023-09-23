@@ -21,21 +21,25 @@ export default {
       }, 1500)
 
 
-      var genericIntegrationProperties = {};
-      genericIntegrationProperties.target = document.getElementById('mathtype_htmlEditor');
-      genericIntegrationProperties.toolbar = document.getElementById('mathtype_toolbar');
+      setTimeout(() => {
+        var genericIntegrationProperties = {};
+        genericIntegrationProperties.target = document.getElementById('wangEditor');
+        genericIntegrationProperties.toolbar = document.getElementById('wangToolbar').firstChild;
 
 
-      // GenericIntegration instance.
-      var genericIntegrationInstance = new WirisPlugin.GenericIntegration(genericIntegrationProperties);
-      genericIntegrationInstance.init();
-      genericIntegrationInstance.listeners.fire('onTargetReady', {
-
-      });
+        // GenericIntegration instance.
+        var genericIntegrationInstance = new WirisPlugin.GenericIntegration(genericIntegrationProperties);
+        genericIntegrationInstance.init();
+        genericIntegrationInstance.listeners.fire('onTargetReady', {});
 
 
-      WirisPlugin.currentInstance = this.wiris_generic;
-      console.log('WirisPlugin.currentInstance', WirisPlugin.currentInstance)
+        WirisPlugin.currentInstance = genericIntegrationInstance;
+
+      // Change buttons styles to match the wang toolbar buttons.
+        document.getElementById('editorIcon').style.padding = '11px';
+        document.getElementById('chemistryIcon').style.padding = '11px';
+      }, 100)
+
     })
 
     const toolbarConfig = {}
@@ -76,18 +80,16 @@ export default {
 
 <template>
   <div style="border: 1px solid #ccc">
-    <div id="mathtype_toolbar"></div>
-   <div id="mathtype_htmlEditor" contenteditable="true"></div>
-
-
 
     <Toolbar
+        id="wangToolbar"
         style="border-bottom: 1px solid #ccc"
         :editor="editorRef"
         :defaultConfig="toolbarConfig"
         :mode="mode"
     />
     <Editor
+        id="wangEditor"
         style="height: 500px; overflow-y: hidden;"
         v-model="valueHtml"
         :defaultConfig="editorConfig"
